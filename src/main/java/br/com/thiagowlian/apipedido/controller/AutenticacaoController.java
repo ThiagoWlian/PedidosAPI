@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,6 +27,7 @@ public class AutenticacaoController {
 	@Autowired
 	private TokenService tokenService;
 	
+	@PostMapping
 	public ResponseEntity<?> autenticar(@RequestBody @Valid LoginForm loginForm){
 		UsernamePasswordAuthenticationToken loginDados = loginForm.converterParaUsernamePasswordAuthenticationToken();
 		
@@ -33,7 +36,8 @@ public class AutenticacaoController {
 			 String token  = tokenService.gerarToken(authentication);
 			 return ResponseEntity.ok(new TokenDto(token, "Bearer"));
 		}
-		catch (Exception e) {
+		catch (AuthenticationException e) {
+			System.out.print(e.toString());
 			return ResponseEntity.badRequest().build();
 		}
 		

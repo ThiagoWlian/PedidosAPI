@@ -24,7 +24,7 @@ public class LoginForm {
 		return senha;
 	}
 	public void setSenha(String senha) {
-		this.senha = new BCryptPasswordEncoder().encode(senha);
+		this.senha = senha;
 	}
 	
 	public UsuarioModel converterParaUsuarioModel() {

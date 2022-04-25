@@ -2,7 +2,6 @@ package br.com.thiagowlian.apipedido.controller.service;
 
 import java.util.Date;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -14,10 +13,10 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Service
 public class TokenService {
 	
-	@Value("$pedido.jwt.secret")
+	@Value("${pedido.jwt.secret}")
 	private String secret;
 	
-	@Value("$pedido.jwt.expiration")
+	@Value("${pedido.jwt.expiration}")
 	private String expirationTime;
 	
 	public String gerarToken(Authentication authentication) {
