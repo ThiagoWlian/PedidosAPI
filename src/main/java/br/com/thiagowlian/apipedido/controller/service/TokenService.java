@@ -2,6 +2,8 @@ package br.com.thiagowlian.apipedido.controller.service;
 
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -30,6 +32,29 @@ public class TokenService {
 				.setExpiration(dateExpiration)
 				.signWith(SignatureAlgorithm.HS256, secret)
 				.compact();
+	}
+	
+	public String recuperarTokenDaRequisicao(HttpServletRequest request) {
+		String token = request.getHeader("Authorization");
+		if(token == null || token.isBlank() || !token.startsWith("Bearer ")) {
+			return null;
+		}	
+		return token.substring(7, token.length());	
+	}
+	
+	public Boolean isTokenValid(String token) {
+		try {
+			Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token);
+			return true;
+		}
+		catch (Exception e) {
+			return false;
+		}
+	}
+
+	public int getUserIdFromToken(String token) {
+		int userId = Integer.parseInt(Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token).getBody().getSubject());
+		return userId;
 	}
 
 }
