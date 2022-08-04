@@ -1,6 +1,2 @@
-<h1>PedidosAPI</h1>
-
-
-<h2>Instalação</h2>
-<h2>Utilização</h2>
-<h2>Tecnologias</h2>
+<h1>Tecnologias</h1>
+<p>Java, Spring, Spring Boot, Spring Security, MySQL e Docker</p>
